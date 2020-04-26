@@ -29,7 +29,7 @@ export default class extends Task {
         }
         // metrics
         for (const [category, count] of Object.entries(await this.dao.getUserCountByCategory())) {
-            metrics.gauge(`uninja.users.${UserCategory[category]}`, count)
+            metrics.gauge(`umonkey.users.${UserCategory[category]}`, count)
         }
 
         const users: string[] = await this.dao.getUserIdsByCategory(UserCategory.enabled);
@@ -39,9 +39,9 @@ export default class extends Task {
 
             let metric;
             if (index === users.length - 1) {
-                metric = {name: 'uninja.check-duration.last', from: job.started_at};
+                metric = {name: 'umonkey.check-duration.last', from: job.started_at};
             } else if (index === 30000) {
-                metric = {name: 'uninja.check-duration.30000th', from: job.started_at};
+                metric = {name: 'umonkey.check-duration.30000th', from: job.started_at};
             }
             const jobData = metric ? {username, userId, metric} : {username, userId};
             await promisify((cb) =>
